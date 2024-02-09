@@ -14,10 +14,12 @@ Public Class UnitOfWork : Implements IUnitOfWork
         Me.Context = context
 
         UserRepo = New UserRepository(context)
+        UserRoleRepo = New UserRoleRepository(context)
     End Sub
 
 
     Public ReadOnly Property UserRepo As IUserRepository Implements IUnitOfWork.UserRepo
+    Public ReadOnly Property UserRoleRepo As IUserRoleRepository Implements IUnitOfWork.UserRoleRepo
 
 
 

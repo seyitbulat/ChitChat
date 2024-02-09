@@ -4,6 +4,7 @@ Public Interface IUnitOfWork
 
 
     ReadOnly Property UserRepo As IUserRepository
+    ReadOnly Property UserRoleRepo As IUserRoleRepository
 
     Function Save() As Task
     Function SaveAsync() As Task

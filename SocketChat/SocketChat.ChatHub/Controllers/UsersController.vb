@@ -74,6 +74,8 @@ Namespace SocketChat.ChatHub.Controllers
         <HttpPost("Login")>
         Public Async Function Login(<FromBody> loginDto As UserLoginDto) As Task(Of IActionResult)
             Dim response = Await _userService.LoginAsync(loginDto)
+
+
             Return SendResponse(response)
         End Function
     End Class

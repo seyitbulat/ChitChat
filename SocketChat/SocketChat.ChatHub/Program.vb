@@ -18,7 +18,6 @@ Module Program
         builder.Services.AddSwaggerGen()
 
 
-        builder.Services.AddAuthentication(JwtBearerDefaults)
 
         builder.Services.AddSingleton(Of ICacheModule, CacheModule)
 

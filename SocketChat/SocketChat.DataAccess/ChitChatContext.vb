@@ -6,6 +6,8 @@ Public Class ChitChatContext : Inherits DbContext
     Public Overridable Property Users As DbSet(Of User)
     Public Overridable Property Hubs As DbSet(Of Hub)
     Public Overridable Property Messages As DbSet(Of Message)
+    Public Overridable Property Roles As DbSet(Of Role)
+    Public Overridable Property UserRoles As DbSet(Of UserRole)
 
     Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
         MyBase.OnConfiguring(optionsBuilder)

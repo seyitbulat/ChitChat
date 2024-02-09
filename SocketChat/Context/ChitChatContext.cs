@@ -10,5 +10,10 @@ public class ChitChatContext : DbContext
         base.OnConfiguring(optionsBuilder);
 
         optionsBuilder.UseSqlServer("Data Source=DESKTOP-R04PVQ3\\SQLEXPRESS01; Initial Catalog=ChitChat; Integrated Security=true; TrustServerCertificate=True");
+
+        int[] ses = new int[] { 1, 2, 3 };  
+
+        
+
     }
 }
