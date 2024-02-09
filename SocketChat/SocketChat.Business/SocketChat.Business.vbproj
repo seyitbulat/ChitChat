@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SocketChat.Business</RootNamespace>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SocketChat.DataAccess\SocketChat.DataAccess.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Autofac\" />
+  </ItemGroup>
+
+</Project>

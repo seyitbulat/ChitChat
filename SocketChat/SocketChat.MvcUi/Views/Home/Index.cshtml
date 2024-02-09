@@ -1,0 +1,64 @@
+﻿@using SocketChat.MvcUi.GlobalStroge
+@{
+	Layout = null;
+
+}
+@model UserModel
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chat Uygulaması</title>
+	<link rel="stylesheet" href="~/css/style.css">
+
+	<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+
+	<div class="chat-container col">
+		<div id="hub-list" class="row row-3">
+			<div class="hub flex-column">
+				<div class="hub-user  col col-2 ms-4">
+					<h1>Hubda Bulunan Kullanıcılar:</h1>
+					<ul class="fw-bold" id="user-list">
+						 
+					</ul>
+					<p class="fw-bold col col-1">Kullanıcı: @Model.UserName</p>
+				</div>
+				<div class="hub-list flex col col-10 m-2"></div>
+			</div>
+		</div>
+		<div id="chat-box" class="row row-2 my-2" style="width: 60%;">
+			<ul id="chat-box-list">
+
+			</ul>
+		</div>
+		<div class="chat-send flex-column justify-content-center m-auto" style="width: 60%;">
+			<input class="flex col col-8 me-3" required type="text" id="message"  placeholder="Mesajınızı yazın...">
+			<button class="flex col col-3 " id="send-btn" onclick="sendMessage()">Gönder</button>
+		</div>
+	</div>
+
+
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.esm.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.esm.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script>
+
+		const username = '@Html.Raw(Model.UserName)';
+		let selectedHub = parseInt('@Html.Raw(Model.HubId)');
+	</script>
+	<script src="~/js/home.js"></script>
+</body>
+</html>

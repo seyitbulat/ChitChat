@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SocketChat", "SocketChat\SocketChat.vbproj", "{8C04FE90-9B2B-4D33-AA5A-1EF9E901DE6A}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SocketChat.ChatHub", "SocketChat.ChatHub\SocketChat.ChatHub.vbproj", "{EA13B1FC-3638-41AB-82F7-2FD33814E92B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketChat.MvcUi", "SocketChat.MvcUi\SocketChat.MvcUi.csproj", "{E5DD37EB-0951-4BBC-A446-3F582D9F8B48}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SocketChat.Model", "SocketChat.Model\SocketChat.Model.vbproj", "{BFBF22EB-113A-474D-938A-72A18F27D1F2}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SocketChat.DataAccess", "SocketChat.DataAccess\SocketChat.DataAccess.vbproj", "{8F580DDD-A9AF-41F2-AC8B-A1676597F5B6}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SocketChat.Business", "SocketChat.Business\SocketChat.Business.vbproj", "{CF22A8E9-9779-4AE1-9C5B-7DA9BE56F06E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Context", "Context\Context.csproj", "{302C74DD-3062-4E9E-9BE3-8B81EF957502}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C04FE90-9B2B-4D33-AA5A-1EF9E901DE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C04FE90-9B2B-4D33-AA5A-1EF9E901DE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C04FE90-9B2B-4D33-AA5A-1EF9E901DE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C04FE90-9B2B-4D33-AA5A-1EF9E901DE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA13B1FC-3638-41AB-82F7-2FD33814E92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA13B1FC-3638-41AB-82F7-2FD33814E92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA13B1FC-3638-41AB-82F7-2FD33814E92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA13B1FC-3638-41AB-82F7-2FD33814E92B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5DD37EB-0951-4BBC-A446-3F582D9F8B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5DD37EB-0951-4BBC-A446-3F582D9F8B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5DD37EB-0951-4BBC-A446-3F582D9F8B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5DD37EB-0951-4BBC-A446-3F582D9F8B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFBF22EB-113A-474D-938A-72A18F27D1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFBF22EB-113A-474D-938A-72A18F27D1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFBF22EB-113A-474D-938A-72A18F27D1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFBF22EB-113A-474D-938A-72A18F27D1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F580DDD-A9AF-41F2-AC8B-A1676597F5B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F580DDD-A9AF-41F2-AC8B-A1676597F5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F580DDD-A9AF-41F2-AC8B-A1676597F5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F580DDD-A9AF-41F2-AC8B-A1676597F5B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF22A8E9-9779-4AE1-9C5B-7DA9BE56F06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF22A8E9-9779-4AE1-9C5B-7DA9BE56F06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF22A8E9-9779-4AE1-9C5B-7DA9BE56F06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF22A8E9-9779-4AE1-9C5B-7DA9BE56F06E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4A6A0B1-D5AB-4DFB-A627-000DEE80DC51}
+	EndGlobalSection
+EndGlobal
