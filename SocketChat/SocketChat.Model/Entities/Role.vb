@@ -6,13 +6,13 @@
 
     Public Property UserRoles As IEnumerable(Of UserRole)
 
-    Public Property AddedDate As Date Implements IEntity(Of Short).AddedDate
+    Public Property AddedDate As Date? Implements IEntity(Of Short).AddedDate
 
 
-    Public Property UpdatedDate As Date Implements IEntity(Of Short).UpdatedDate
+    Public Property UpdatedDate As Date? Implements IEntity(Of Short).UpdatedDate
 
 
-    Public Property DeletedDate As Date Implements IEntity(Of Short).DeletedDate
+    Public Property DeletedDate As Date? Implements IEntity(Of Short).DeletedDate
 
 
     Public Property IsActive As Boolean Implements IEntity(Of Short).IsActive

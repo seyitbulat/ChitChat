@@ -10,20 +10,52 @@ Public Class Repository(Of TId As Structure, TEntity As {IEntity(Of TId), IGener
         _context = context
         _dbSet = _context.Set(Of TEntity)
     End Sub
-    Public Async Function GetAsync(id As TId) As Task(Of TEntity) Implements IRepository(Of TId, TEntity).GetAsync
+    Public Async Function GetAsync(id As TId, Optional includeList As List(Of String) = Nothing) As Task(Of TEntity) Implements IRepository(Of TId, TEntity).GetAsync
 
-        Return Await _dbSet.Where(Function(e) e.Id.Equals(id) And e.IsActive = True).SingleOrDefaultAsync()
+
+        Dim query As IQueryable(Of TEntity) = _dbSet
+        If includeList IsNot Nothing Then
+            For Each item In includeList
+                query = query.Include(item)
+            Next
+        End If
+
+        Return Await query.Where(Function(e) e.Id.Equals(id) And e.IsActive = True).SingleOrDefaultAsync()
     End Function
 
-    Public Async Function GetAsync(predicate As Expression(Of Func(Of TEntity, Boolean))) As Task(Of TEntity) Implements IRepository(Of TId, TEntity).GetAsync
-        Return Await _dbSet.Where(Function(e) e.IsActive = True).SingleOrDefaultAsync(predicate)
+    Public Async Function GetAsync(predicate As Expression(Of Func(Of TEntity, Boolean)), Optional includeList As List(Of String) = Nothing) As Task(Of TEntity) Implements IRepository(Of TId, TEntity).GetAsync
+
+        Dim query As IQueryable(Of TEntity) = _dbSet
+        If includeList IsNot Nothing Then
+            For Each item In includeList
+                query = query.Include(item)
+            Next
+        End If
+
+        Return Await query.Where(Function(e) e.IsActive = True).SingleOrDefaultAsync(predicate)
     End Function
 
-    Public Async Function GetListAsync() As Task(Of IEnumerable(Of TEntity)) Implements IRepository(Of TId, TEntity).GetListAsync
-        Return Await _dbSet.ToListAsync()
+    Public Async Function GetListAsync(Optional includeList As List(Of String) = Nothing) As Task(Of IEnumerable(Of TEntity)) Implements IRepository(Of TId, TEntity).GetListAsync
+
+        Dim query As IQueryable(Of TEntity) = _dbSet
+        If includeList IsNot Nothing Then
+            For Each item In includeList
+                query = query.Include(item)
+            Next
+        End If
+        Return Await query.ToListAsync()
     End Function
-    Public Async Function GetListAsync(predicate As Expression(Of Func(Of TEntity, Boolean))) As Task(Of IEnumerable(Of TEntity)) Implements IRepository(Of TId, TEntity).GetListAsync
-        Dim list = Await _dbSet.Where(Function(e) e.IsActive = True).Where(predicate).ToListAsync()
+    Public Async Function GetListAsync(predicate As Expression(Of Func(Of TEntity, Boolean)), Optional includeList As List(Of String) = Nothing) As Task(Of IEnumerable(Of TEntity)) Implements IRepository(Of TId, TEntity).GetListAsync
+
+
+        Dim query As IQueryable(Of TEntity) = _dbSet
+        If includeList IsNot Nothing Then
+            For Each item In includeList
+                query = query.Include(item)
+            Next
+        End If
+
+        Dim list = Await query.Where(Function(e) e.IsActive = True).Where(predicate).ToListAsync()
         Return list
     End Function
     Public Async Function AddAsync(entity As TEntity) As Task(Of TEntity) Implements IRepository(Of TId, TEntity).AddAsync

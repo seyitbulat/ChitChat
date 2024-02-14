@@ -6,9 +6,11 @@ Imports SocketChat.Model
 Public Class UserService : Implements IUserService
 
     Private ReadOnly _uow As IUnitOfWork
+    Private ReadOnly _userRoleService As IUserRoleService
 
-    Public Sub New(uow As IUnitOfWork)
+    Public Sub New(uow As IUnitOfWork, userRoleService As IUserRoleService)
         _uow = uow
+        _userRoleService = userRoleService
     End Sub
 
     Public Async Function GetAsync(id As Long) As Task(Of ApiResponse(Of UserGetDto)) Implements IUserService.GetAsync
@@ -63,6 +65,10 @@ Public Class UserService : Implements IUserService
 
         Dim repoResponse = Await _uow.UserRepo.AddAsync(user)
         Await _uow.SaveAsync()
+
+        Dim newUser = Await _uow.UserRepo.GetAsync(Function(e) e.Username = user.Username)
+
+        _userRoleService.AddAsync(New UserRolePostDto With {.RoleId = 2, .UserId = newUser.Id})
 
         Dim newUserDto As New UserGetDto
         newUserDto.Username = repoResponse.Username

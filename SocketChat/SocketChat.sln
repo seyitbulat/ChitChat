@@ -17,9 +17,15 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SocketChat.Business", "Sock
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Context", "Context\Context.csproj", "{302C74DD-3062-4E9E-9BE3-8B81EF957502}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1\BlazorApp1.csproj", "{B350392D-04C2-4669-885F-ABE0939C6A17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketChat.BlazorUi", "SocketChat.BlazorUi\SocketChat.BlazorUi\SocketChat.BlazorUi.csproj", "{32D6E1B0-92D2-46AE-B767-DE365017BD60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1.Client", "BlazorApp1\BlazorApp1.Client\BlazorApp1.Client.csproj", "{EFFB5569-09B0-43B2-94B1-AC480E62DBB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketChat.BlazorUi.Client", "SocketChat.BlazorUi\SocketChat.BlazorUi.Client\SocketChat.BlazorUi.Client.csproj", "{F31C485E-5D5D-44EB-9A1F-E4917F0EE4D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{D22CCF08-6502-46EB-B3CB-7D8A825A4BAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old_Client", "Old_Client", "{D98C2CAF-852E-48B7-84AE-E3D36DAF507C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketChat.BlazorUi.Services", "SocketChat.BlazorUi.Services\SocketChat.BlazorUi.Services.csproj", "{63A720A9-975A-4332-BF69-65B054994472}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,17 +61,28 @@ Global
 		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{302C74DD-3062-4E9E-9BE3-8B81EF957502}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B350392D-04C2-4669-885F-ABE0939C6A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B350392D-04C2-4669-885F-ABE0939C6A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B350392D-04C2-4669-885F-ABE0939C6A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B350392D-04C2-4669-885F-ABE0939C6A17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFFB5569-09B0-43B2-94B1-AC480E62DBB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFFB5569-09B0-43B2-94B1-AC480E62DBB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFFB5569-09B0-43B2-94B1-AC480E62DBB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFFB5569-09B0-43B2-94B1-AC480E62DBB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32D6E1B0-92D2-46AE-B767-DE365017BD60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32D6E1B0-92D2-46AE-B767-DE365017BD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32D6E1B0-92D2-46AE-B767-DE365017BD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32D6E1B0-92D2-46AE-B767-DE365017BD60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31C485E-5D5D-44EB-9A1F-E4917F0EE4D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31C485E-5D5D-44EB-9A1F-E4917F0EE4D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31C485E-5D5D-44EB-9A1F-E4917F0EE4D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31C485E-5D5D-44EB-9A1F-E4917F0EE4D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A720A9-975A-4332-BF69-65B054994472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A720A9-975A-4332-BF69-65B054994472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A720A9-975A-4332-BF69-65B054994472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A720A9-975A-4332-BF69-65B054994472}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C04FE90-9B2B-4D33-AA5A-1EF9E901DE6A} = {D98C2CAF-852E-48B7-84AE-E3D36DAF507C}
+		{E5DD37EB-0951-4BBC-A446-3F582D9F8B48} = {D98C2CAF-852E-48B7-84AE-E3D36DAF507C}
+		{32D6E1B0-92D2-46AE-B767-DE365017BD60} = {D22CCF08-6502-46EB-B3CB-7D8A825A4BAE}
+		{F31C485E-5D5D-44EB-9A1F-E4917F0EE4D5} = {D22CCF08-6502-46EB-B3CB-7D8A825A4BAE}
+		{63A720A9-975A-4332-BF69-65B054994472} = {D22CCF08-6502-46EB-B3CB-7D8A825A4BAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4A6A0B1-D5AB-4DFB-A627-000DEE80DC51}

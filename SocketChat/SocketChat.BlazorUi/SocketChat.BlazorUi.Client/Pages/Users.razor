@@ -1,0 +1,101 @@
+﻿@page "/Users"
+@using Microsoft.FluentUI.AspNetCore.Components;
+@using System.Text.Json
+@using SocketChat.BlazorUi.Services;
+@using SocketChat.BlazorUi.Services.ApiServices
+@using SocketChat.BlazorUi.Services.Models
+
+
+@inject HttpClient _client;
+@inject NavigationManager NavManager
+@inject UserServices UserService
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+
+<h3>Users</h3>
+
+
+
+<FluentDataGrid Items="@UserList">
+	<PropertyColumn Property="@(u => u.Username)" />
+	<PropertyColumn Property="@(u => u.Email)" />
+</FluentDataGrid>
+
+
+<div class="page-buttons">
+	<FluentButton OnClick="@(() => PageChange(-1))" Appearance="@(CurrentPage == 1? Appearance.Stealth : Appearance.Accent)">Previous</FluentButton>
+	<FluentButton  Appearance="@Appearance.Accent">@CurrentPage</FluentButton>
+	<FluentButton OnClick="@(() => PageChange(1))" Appearance="@(CurrentPage == Pages? Appearance.Stealth : Appearance.Accent)">Next</FluentButton>
+	<InputText type="number" Value="@inputPage" ValueChanged="InputPageChange" ValueExpression="() => inputPage"></InputText>
+</div>
+
+@code {
+	[Parameter]
+	public int Pages { get; set; }
+
+	[Parameter]
+	public IQueryable<Services.Models.User> UserList { get; set; }
+
+	[Parameter]
+
+	public int CurrentPage { get; set; } = 1;
+
+	public string inputPage { get; set; }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+
+		if (NavManager.Uri.Contains(NavManager.BaseUri))
+		{
+			CurrentPage = 1;
+			await LoadData(1);
+
+		}
+
+	}
+
+	private async Task LoadData(int pageNumber)
+	{
+		var response = await UserService.UsersWithPage(pageNumber, 20);
+
+		UserList = response.Data.AsQueryable();
+
+		Pages = response.DataCount;
+	}
+
+
+
+	private async Task PageChange(int increment)
+	{
+		var newPage = CurrentPage + increment;
+
+		if (newPage >= 1 && newPage <= Pages)
+		{
+			CurrentPage = newPage;
+			await LoadData(CurrentPage);
+		}
+
+	}
+
+
+	private async Task PageLoad(int page)
+	{
+		var newPage = page;
+
+		if (newPage >= 1 && newPage <= Pages)
+		{
+			CurrentPage = newPage;
+			await LoadData(CurrentPage);
+		}
+	}
+
+
+
+
+	private async Task InputPageChange(string input)
+	{
+		await PageLoad(int.Parse(input));
+	}
+}

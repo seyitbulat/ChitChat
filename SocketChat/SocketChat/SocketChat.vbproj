@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\SocketChat.BlazorUi\SocketChat.BlazorUi\Components\Pages\Customer.razor" Link="Customer.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DevExpress.Wpf.Core" Version="23.1.6" />
     <PackageReference Include="DevExpress.Wpf.Themes.All" Version="23.1.6" />
   </ItemGroup>

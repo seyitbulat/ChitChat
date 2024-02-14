@@ -12,7 +12,14 @@ Public Class ChitChatContext : Inherits DbContext
     Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
         MyBase.OnConfiguring(optionsBuilder)
 
-        optionsBuilder.UseSqlServer("Data Source=DESKTOP-R04PVQ3;Initial Catalog=ChitChat;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;")
+        optionsBuilder.UseSqlServer("Server=10.19.10.42,1433;Initial Catalog=ChitChat;Persist Security Info=False;User ID=sa;Password=hehe123;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;")
+
+
+    End Sub
+
+    Protected Overrides Sub OnModelCreating(modelBuilder As ModelBuilder)
+        MyBase.OnModelCreating(modelBuilder)
+
     End Sub
 
 

@@ -23,6 +23,9 @@ Namespace SocketChat.ChatHub.Controllers
             _userService = userService
             _memoryCache = memoryCache
             _cacheModule = cacheModule
+            Dim provide As ModuleProvider = ModuleProvider.Instance
+
+
         End Sub
 
         <CacheAspect(2)>

@@ -1,6 +1,7 @@
 Imports System
 Imports Microsoft.AspNetCore.Builder
 Imports Microsoft.AspNetCore.Rewrite
+Imports Microsoft.Extensions.Caching.Memory
 Imports Microsoft.Extensions.DependencyInjection
 Imports Microsoft.Extensions.Hosting
 Imports SocketChat.Business
@@ -19,7 +20,16 @@ Module Program
 
 
 
+        builder.Services.AddAutoMapper(GetType(MainProfile))
         builder.Services.AddSingleton(Of ICacheModule, CacheModule)
+
+        Dim provider As ModuleProvider = ModuleProvider.Instance
+
+
+
+
+        builder.Services.AddAutoMapper(GetType(MainProfile))
+
 
         builder.Services.AddDataAccesServices()
 
@@ -30,6 +40,13 @@ Module Program
 
 
         Dim app = builder.Build()
+        app.UseCors(Function(cors)
+                        cors.AllowAnyMethod() _
+                    .AllowAnyHeader() _
+                    .SetIsOriginAllowed(Function(origin) True) _
+                    .AllowCredentials()
+                    End Function)
+
 
         app.UseRewriter(New RewriteOptions().AddRedirect("^$", "swagger"))
 
