@@ -1,4 +1,5 @@
-﻿Imports SocketChat.Model
+﻿Imports System.Linq.Expressions
+Imports SocketChat.Model
 
 Public Interface IService(Of TId, TGetDto, TPostDto)
 
@@ -9,6 +10,7 @@ Public Interface IService(Of TId, TGetDto, TPostDto)
     Function AddAsync(user As TPostDto) As Task(Of ApiResponse(Of TGetDto))
 
     Function RemoveAsync(id As Long) As Task(Of ApiResponse(Of NoData))
+    Function RemoveAsync(dto As TPostDto) As Task(Of ApiResponse(Of NoData))
 
 End Interface
 

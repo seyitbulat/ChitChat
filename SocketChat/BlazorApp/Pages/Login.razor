@@ -1,0 +1,71 @@
+﻿@page "/"
+@page "/Login"
+@layout LoginLayout
+
+@using BlazorApp.Model
+@using BlazorApp.Utilities
+
+@inject ApiServices.ApiService ApiService
+@inject Blazored.SessionStorage.ISessionStorageService SessionService
+@inject NavigationManager NavManager
+
+
+<div class="header row justify-content-center text-center text-white m-2 p-2">
+	<h3>ChitChat </h3><br />
+	<h3>Giriş</h3>
+</div>
+<div class="login-form row justify-content-center m-2">
+	<div class="form-container w-75 m-2">
+		<EditForm  Model="LoginObject" OnValidSubmit="SubmitLogin">
+			<DataAnnotationsValidator />
+			<ValidationSummary />
+			<div class="form-control input-group mb-3 justify-content-center border-0" style="background-color: #191919">
+				<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+				<InputText class="" @bind-Value="LoginObject.Username"></InputText>
+			</div>
+			<div class="form-control input-group mb-3 justify-content-center border-0" style="background-color: #191919">
+				<span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
+				<InputText class="" type="password" @bind-Value="LoginObject.Password"></InputText>
+			</div>
+			<div class="form-control input-group mb-3 justify-content-center border-0" style="background-color: #191919">
+				<button class="btn btn-primary" type="submit">Giris Yap</button>
+			</div>
+		</EditForm>
+	</div>
+</div>
+
+<div class="error-label text-white justify-content-center text-center" style="@IsNone;">
+	<p>@ErrorMessage</p>
+</div>
+@code {
+	public UserLogin LoginObject{ get; set; }
+
+	private string ErrorMessage { get; set; }
+	private string IsNone { get; set; }
+
+
+
+	protected override void OnInitialized()
+	{
+		LoginObject = new();
+	}
+
+	private async Task SubmitLogin()
+	{
+		var user = await ApiService.PostDataAsync<User,UserLogin>("/Users/Login", LoginObject);
+
+		if(user.StatusCode == 200)
+		{
+			IsNone = "display: none;";
+
+			GlobalSessionService.SetLoggedUser(user.Data);
+			NavManager.NavigateTo("/Home");
+		}
+		else
+		{
+			ErrorMessage = user.ErrorMessages.FirstOrDefault().TrimEnd('.');
+			IsNone = "";
+		}
+
+	}
+}

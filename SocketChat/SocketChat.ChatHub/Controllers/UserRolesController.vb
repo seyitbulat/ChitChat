@@ -1,4 +1,5 @@
 ﻿Imports System
+Imports Microsoft.AspNetCore.Authorization
 Imports Microsoft.AspNetCore.Mvc
 Imports Microsoft.Extensions.Logging
 Imports SocketChat.Business
@@ -7,6 +8,7 @@ Imports SocketChat.Model
 Namespace SocketChat.ChatHub.Controllers
     <ApiController>
     <Route("[controller]")>
+    <Authorize>
     Public Class UserRolesController
         Inherits BaseController
 

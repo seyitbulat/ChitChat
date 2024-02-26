@@ -75,6 +75,15 @@ Public Class Repository(Of TId As Structure, TEntity As {IEntity(Of TId), IGener
         Return True
     End Function
 
+
+    Public Async Function RemoveAsync(user As TEntity) As Task(Of Boolean) Implements IRepository(Of TId, TEntity).RemoveAsync
+
+        user.DeletedDate = DateTime.Now
+        user.IsActive = False
+
+        Return True
+    End Function
+
     Public Async Function RemoveAsync(id As TId, isHard As Boolean) As Task(Of Boolean) Implements IRepository(Of TId, TEntity).RemoveAsync
         If isHard Then
             Dim entity = Await _dbSet.FirstOrDefaultAsync(Function(u) u.Id.Equals(id))

@@ -1,0 +1,47 @@
+﻿@using BlazorApp.Model
+@using BlazorApp.Utilities
+@inherits LayoutComponentBase
+@inject Blazored.SessionStorage.ISessionStorageService SessionService
+@inject NavigationManager NavManager
+
+<PageTitle>BlazorApp</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <div class="d-grid row">
+                <button class="dropdown-item " type="button">Hesap</button>
+                <button class="dropdown-item " type="button">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+
+@code{
+
+    public User User { get; set; } = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        User = GlobalSessionService.GetLoggedUser();
+
+        if (User == null)
+        {
+            NavManager.NavigateTo("/Login");
+        }
+
+    }
+
+}

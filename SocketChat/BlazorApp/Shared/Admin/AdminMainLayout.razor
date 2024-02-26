@@ -1,0 +1,37 @@
+﻿@using BlazorApp.Model
+@using BlazorApp.Utilities
+
+@inject NavigationManager NavManager
+
+@inherits LayoutComponentBase
+
+<div class="wrapper">
+
+	<AdminNavMenu />
+
+	<AdminSidebar Admin="Admin" />
+	@Body
+
+    <AdminFooter />
+</div>
+
+
+@code {
+
+    public User Admin { get; set; } = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        Admin = GlobalSessionService.Admin;
+
+        if (Admin == null)
+        {
+            NavManager.NavigateTo("/Admin/Login");
+        }
+
+    }
+
+}

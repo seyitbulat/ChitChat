@@ -3,6 +3,7 @@ Imports System.Net.WebSockets
 Imports System.Security.Claims
 Imports System.Text
 Imports System.Threading
+Imports Microsoft.AspNetCore.Authorization
 Imports Microsoft.AspNetCore.Http
 Imports Microsoft.AspNetCore.Mvc
 Imports Microsoft.Extensions.Logging
@@ -13,6 +14,7 @@ Imports SocketChat.ChatHub.SocketChat.MvcUi.GlobalStroge
 Namespace SocketChat.ChatHub.Controllers
     <ApiController>
     <Route("[controller]")>
+    <Authorize>
     Public Class HubsController
         Inherits ControllerBase
 
@@ -23,12 +25,17 @@ Namespace SocketChat.ChatHub.Controllers
         End Sub
 
         <HttpGet>
-        Public Function [Get]() As IEnumerable(Of String)
+        Public Async Function [Get]() As Task(Of IEnumerable(Of String))
+            Dim roleTest = Await AuthorizationService.RoleCheck("User", HttpContext)
+
             Return _chatHubManager.GetAvailableHubs()
         End Function
 
         <HttpGet("/chatHub")>
         Public Async Function ChatHub(<FromQuery> hub As String, <FromQuery> user As String) As Task
+
+            Dim roleTest = Await AuthorizationService.RoleCheck("User", HttpContext)
+
             If HttpContext.WebSockets.IsWebSocketRequest Then
                 ' Query string'den hubName ve userId alın
                 'Dim hubName = HttpContext.Request.Query("hub")
@@ -121,11 +128,13 @@ Namespace SocketChat.ChatHub.Controllers
 
         <HttpGet("CurrentUser")>
         Public Async Function CurentUser() As Task(Of IActionResult)
+            Dim roleTest = Await AuthorizationService.RoleCheck("User", HttpContext)
             Return Ok(ActiveUser.User)
         End Function
 
         <HttpGet("ActiveUsers")>
         Public Async Function GetUsers() As Task(Of IActionResult)
+            Dim roleTest = Await AuthorizationService.RoleCheck("User", HttpContext)
             Return Ok(ActiveUsers.Users)
         End Function
     End Class

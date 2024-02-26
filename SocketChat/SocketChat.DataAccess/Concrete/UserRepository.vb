@@ -13,15 +13,28 @@ Public Class UserRepository : Inherits Repository(Of Long, User, ChitChatContext
         _context = context
     End Sub
 
-    Public Async Function GetListAsync(userParameters As UserParameters, Optional predicate As Expression(Of Func(Of User, Boolean)) = Nothing, Optional trackChanges As Boolean = False) As Task(Of PagedList(Of User)) Implements IUserRepository.GetListAsync
+    Public Async Function GetListAsync(userParameters As UserParameters, Optional predicate As Expression(Of Func(Of User, Boolean)) = Nothing, Optional trackChanges As Boolean = False, Optional isActive As Boolean = True) As Task(Of PagedList(Of User)) Implements IUserRepository.GetListAsync
         Dim list
-        If predicate IsNot Nothing Then
-            list = Await _context.Users.Where(Function(e) e.IsActive = True).Where(predicate).Skip((userParameters.PageNumber - 1) * userParameters.PageSize).Take(userParameters.PageSize).ToListAsync()
+
+        If isActive = True Then
+            If predicate IsNot Nothing Then
+                list = Await _context.Users.Where(Function(e) e.IsActive = True).Where(predicate).Skip((userParameters.PageNumber - 1) * userParameters.PageSize).Take(userParameters.PageSize).ToListAsync()
+
+            Else
+                list = Await _context.Users.Where(Function(e) e.IsActive = True).Skip((userParameters.PageNumber - 1) * userParameters.PageSize).Take(userParameters.PageSize).ToListAsync()
+
+            End If
 
         Else
-            list = Await _context.Users.Where(Function(e) e.IsActive = True).Skip((userParameters.PageNumber - 1) * userParameters.PageSize).Take(userParameters.PageSize).ToListAsync()
+            If predicate IsNot Nothing Then
+                list = Await _context.Users.Where(predicate).Skip((userParameters.PageNumber - 1) * userParameters.PageSize).Take(userParameters.PageSize).ToListAsync()
 
+            Else
+                list = Await _context.Users.Skip((userParameters.PageNumber - 1) * userParameters.PageSize).Take(userParameters.PageSize).ToListAsync()
+
+            End If
         End If
+
 
         Dim count = Await _context.Users.CountAsync()
 

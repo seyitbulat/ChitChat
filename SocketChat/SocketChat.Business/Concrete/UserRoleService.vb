@@ -30,6 +30,18 @@ Public Class UserRoleService : Implements IUserRoleService
         Return ApiResponse(Of IEnumerable(Of UserRoleGetDto)).Success(200, newUserRoleList)
     End Function
 
+    Public Async Function GetByUserAsync(username As String) As Task(Of ApiResponse(Of IEnumerable(Of UserRoleGetDto))) Implements IUserRoleService.GetByUserAsync
+        Dim includeList As New List(Of String)
+        includeList.Add("User")
+        includeList.Add("Role")
+        Dim repoResponse = Await _uow.UserRoleRepo.GetListAsync(Function(e) e.User.Username = username, includeList)
+        Dim newUserRoleList As New List(Of UserRoleGetDto)
+
+        newUserRoleList = _mapper.Map(Of List(Of UserRoleGetDto))(repoResponse)
+
+        Return ApiResponse(Of IEnumerable(Of UserRoleGetDto)).Success(200, newUserRoleList)
+    End Function
+
     Public Function GetAsync(id As Long) As Task(Of ApiResponse(Of UserRoleGetDto)) Implements IService(Of Long, UserRoleGetDto, UserRolePostDto).GetAsync
         Throw New NotImplementedException()
     End Function
@@ -60,5 +72,17 @@ Public Class UserRoleService : Implements IUserRoleService
 
     Public Function RemoveAsync(id As Long) As Task(Of ApiResponse(Of NoData)) Implements IService(Of Long, UserRoleGetDto, UserRolePostDto).RemoveAsync
         Throw New NotImplementedException()
+    End Function
+
+    Public Async Function RemoveAsync(dto As UserRolePostDto) As Task(Of ApiResponse(Of NoData)) Implements IService(Of Long, UserRoleGetDto, UserRolePostDto).RemoveAsync
+        Dim userRole = Await _uow.UserRoleRepo.GetAsync(Function(u) u.UserId = dto.UserId)
+
+        If userRole Is Nothing Then
+            Throw New BadRequestException("Kullanıcının rolu bulunmamakta")
+        End If
+
+        Dim result = Await _uow.UserRoleRepo.RemoveAsync(userRole)
+        Await _uow.SaveAsync()
+        Return ApiResponse(Of NoData).Success(200)
     End Function
 End Class

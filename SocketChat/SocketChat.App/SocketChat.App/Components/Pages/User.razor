@@ -1,0 +1,40 @@
+﻿@using SocketChat.BlazorUi.Services.ApiServices
+@using SocketChat.BlazorUi.Services.Models;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+
+@page "/User/{Username?}"
+@inject UserServices UserService
+@inject NavigationManager NavManager
+
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+
+<h3>@CurrentUser.Username</h3>
+
+@code {
+
+	[Parameter]
+	public string Username { get; set; }
+
+
+	public SocketChat.BlazorUi.Services.Models.User CurrentUser { get; set; } = new();
+
+	protected override async Task OnParametersSetAsync()
+	{
+		var user = await ProtectedSessionStore.GetAsync<SocketChat.BlazorUi.Services.Models.User>("User");
+		var response = await UserService.GetByUsername(Username,user.Value.Token);
+
+		if (response.StatusCode == 200)
+		{
+
+			CurrentUser = user.Value;
+		}
+		else
+		{
+			NavManager.NavigateTo("/");
+		}
+	}
+
+
+}

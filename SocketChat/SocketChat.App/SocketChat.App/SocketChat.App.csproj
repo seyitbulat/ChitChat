@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1dc57d8b-54d6-42c1-8c2c-f2fc38eb04d5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SocketChat.BlazorUi.Services\SocketChat.BlazorUi.Services.csproj" />
+    <ProjectReference Include="..\SocketChat.App.Client\SocketChat.App.Client.csproj" />
+    <PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+	<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.4.1" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Components\Pages\User.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+</Project>

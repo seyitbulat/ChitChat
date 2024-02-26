@@ -1,0 +1,48 @@
+﻿@using SocketChat.App.Session
+@rendermode InteractiveServer
+@inject UserSession Session
+@inject NavigationManager NavManager
+
+<div style="padding:2px; margin:2px;">SocketChat.App</div>
+<div style="display:flex; padding:2px; margin:2px; align-items:center; justify-content:center;">
+
+	@if (Session.User != null)
+	{
+
+		<FluentButton id="btnOpen1" Appearance="Appearance.Accent" @onclick="@(() => open = !open)">
+			@Session.User.Username
+		</FluentButton>
+
+        <FluentMenu Anchor="btnOpen1" @bind-Open="open" @onmenuchange=OnMenuChange>
+           <FluentMenuItem OnClick="@(() => NavManager.NavigateTo($"/User/{Session.User.Username}"))">Hesap</FluentMenuItem>
+           <FluentMenuItem OnClick="@(() => LogOut())">Çıkış Yap</FluentMenuItem>
+        </FluentMenu>
+	}
+	else
+	{
+		<FluentButton OnClick="@(() => NavManager.NavigateTo("/Login"))">Login</FluentButton>
+	}
+
+
+</div>
+
+@code{
+
+	bool open = false;
+	private string status = "";
+
+	private void OnMenuChange(MenuChangeEventArgs args)
+	{
+		if (args is not null && args.Value is not null)
+			status = $"Item \"{args.Value}\" clicked";
+	}
+
+
+	private void LogOut()
+	{
+		Session.ClearUser();
+
+		NavManager.NavigateTo("/");
+	}
+
+}

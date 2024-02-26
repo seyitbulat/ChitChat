@@ -11,5 +11,6 @@ Public Module ServiceBusinessExtension
         service.AddScoped(Of IUserService, UserService)
         service.AddScoped(Of IUserRoleService, UserRoleService)
         service.AddScoped(Of IUnitOfWork, UnitOfWork)
+
     End Sub
 End Module

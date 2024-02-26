@@ -22,3 +22,9 @@ Public Class UserRolePostDto
     Public Property RoleId As Short
 
 End Class
+
+
+Public Class UserRoleDeleteDto
+    Public Property UserId As Long
+
+End Class

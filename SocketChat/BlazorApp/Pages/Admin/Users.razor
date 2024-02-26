@@ -1,0 +1,192 @@
+﻿@page "/Admin/Users/{Page?}"
+@using BlazorApp.Model
+@using BlazorApp.Shared.Admin
+@using BlazorApp.Utilities
+@using System.Text.Json
+@layout AdminMainLayout
+
+@inject ApiServices.ApiService ApiService
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>DataTables</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">DataTables</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">All Users</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Username</th>
+                                        <th>Email(s)</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                    @if(UserList == null)
+                                    {
+                                        <tr>
+                                            Loading...
+                                        </tr>
+                                                            }
+                                    else
+                                    {
+                                        @foreach (var user in UserList)
+                                        {
+                                            <tr>
+                                                <td>@user.Id</td>
+                                                <td>
+                                                    @user.Username
+                                                </td>
+                                                <td>@user.Email</td>
+                                                <td>
+                                                    @if(user.IsActive == true)
+                                                    {
+                                                        <text>Active</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>Pasive</text>
+
+                                                    }
+                                                </td>
+                                                <td class="justify-content-center">
+                                                    <div class="justify-content-center">
+                                                        <button class="btn btn-warning">Edit</button>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </div>
+                                                </td>
+                                              
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Username</th>
+                                        <th>Email(s)</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <div class="page-buttons">
+                                <button class="btn btn-primary" @onclick="@(() => PageChange(-1))" disabled="@(CurrentPage == 1)">Previous</button>
+                                <button class="btn btn-primary">@CurrentPage</button>
+                                <button class="btn btn-primary" @onclick="@(() => PageChange(1))" disabled="@(CurrentPage == TotalPages)">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                  
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+@code {
+    public List<User> UserList { get; set; } = new();
+
+
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public string Page { get; set; }
+
+    public int TotalPages { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Page = Page ?? "1";
+
+        var token = GlobalSessionService.Admin.Token;
+
+        var queries = new Dictionary<string, String>();
+        queries.Add("PageNumber",Page);
+        queries.Add("PageSize", "20");
+
+
+        var response = await ApiService.GetDataAsync("/Users/Page", token, queries);
+
+        var pagination = response.Headers.ToList().Where(e => e.Key == "X-Pagination").Select(e => e.Value).FirstOrDefault();
+        var totalPagination = pagination.FirstOrDefault().Split(',').ToList()[1];
+
+        int total = int.Parse(totalPagination.Split(":").ToList()[1]);
+        TotalPages = total;
+
+        var stringResponse = await response.Content.ReadAsStringAsync();
+
+        var jsonResponse = JsonSerializer.Deserialize<ApiResponse<List<User>>>(stringResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        UserList = jsonResponse.Data;
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        CurrentPage = int.Parse(Page);
+        return base.OnParametersSetAsync();
+    }
+
+    private async Task LoadData(int pageNumber)
+    {
+        var token = GlobalSessionService.Admin.Token;
+        var queries = new Dictionary<string, String>();
+        queries.Add("PageNumber", pageNumber.ToString());
+        queries.Add("PageSize", "20");
+
+        var response = await ApiService.GetDataAsync<List<User>>("/Users/Page", token, queries);
+
+        UserList = response.Data;
+    }
+
+    private async Task PageChange(int inc)
+    {
+        
+        var newPage = CurrentPage + inc;
+
+        if (newPage >= 1 && newPage <= TotalPages)
+        {
+            CurrentPage = newPage;
+            await LoadData(CurrentPage);
+        }
+    }
+}

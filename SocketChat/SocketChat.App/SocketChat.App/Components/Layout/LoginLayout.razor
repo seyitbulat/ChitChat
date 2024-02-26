@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+<FluentLayout>
+    <FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Word" />
+    
+    <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
+       
+        <FluentBodyContent Class="body-content" Style="justify-content:center !important; align-items:center !important;">
+            <div>
+                @Body
+            </div>
+
+            <FluentToastProvider @rendermode="InteractiveServer"/>
+        </FluentBodyContent>
+
+
+    </FluentStack>
+ 
+</FluentLayout>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

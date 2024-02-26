@@ -15,7 +15,7 @@ Public Class CacheAspect
 
     Public Overrides Sub OnActionExecuting(context As ActionExecutingContext)
         MyBase.OnActionExecuting(context)
-        '_cacheModule = TryCast(context.HttpContext.RequestServices.GetService(GetType(ICacheModule)), ICacheModule)
+        _cacheModule = TryCast(context.HttpContext.RequestServices.GetService(GetType(ICacheModule)), ICacheModule)
 
         Dim actionDescriptor = DirectCast(context.ActionDescriptor, Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)
         Dim methodName = String.Format($"{actionDescriptor.ControllerTypeInfo.FullName.ToString()}.{actionDescriptor.MethodInfo.Name}")
@@ -39,7 +39,7 @@ Public Class CacheAspect
 
     Public Overrides Sub OnActionExecuted(context As ActionExecutedContext)
         MyBase.OnActionExecuted(context)
-        '_cacheModule = TryCast(context.HttpContext.RequestServices.GetService(GetType(ICacheModule)), ICacheModule)
+        _cacheModule = TryCast(context.HttpContext.RequestServices.GetService(GetType(ICacheModule)), ICacheModule)
 
 
         Dim actionDescriptor = DirectCast(context.ActionDescriptor, Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)

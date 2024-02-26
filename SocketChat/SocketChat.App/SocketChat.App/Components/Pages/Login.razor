@@ -1,0 +1,79 @@
+﻿@page "/Login";
+@using SocketChat.App.Components.Layout
+@using SocketChat.App.Session
+@using SocketChat.BlazorUi.Services.ApiServices
+@using SocketChat.BlazorUi.Services.Models
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@layout LoginLayout
+
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@inject IToastService ToastService
+@inject UserServices UserService
+@inject UserSession Session
+@inject NavigationManager NavManager
+
+@rendermode @(new InteractiveServerRenderMode(false))
+
+
+
+
+<FluentCard Width="500px" Height="500px" Style="justify-content:center !important; align-items:center !important;">
+	<EditForm Model="@userLogin" OnValidSubmit="@HandleValidSubmit" FormName="login-form" novalidate>
+		<DataAnnotationsValidator />
+		<FluentValidationSummary />
+
+		<FluentStack Orientation="Orientation.Vertical">
+			<div>
+
+				<FluentTextField Name="username" TextFieldType="TextFieldType.Text" @bind-Value="userLogin.Username" Label="Kullanici Adi" Required></FluentTextField>
+				<FluentValidationMessage For="@(() => userLogin.Username)"></FluentValidationMessage>
+			</div>
+			<div>
+				<FluentTextField Name="password" TextFieldType="TextFieldType.Password" @bind-Value="userLogin.Password" Label="Parola" Required></FluentTextField>
+				<FluentValidationMessage For="@(() => userLogin.Password)"></FluentValidationMessage>
+			</div>
+
+			<FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent">Submit</FluentButton>
+
+		</FluentStack>
+	</EditForm>
+</FluentCard>
+
+@code {
+
+	[SupplyParameterFromForm]
+	public UserLogin userLogin { get; set; }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		userLogin = new UserLogin();
+	}
+
+	private async void HandleValidSubmit()
+	{
+
+
+
+		var response = await UserService.Login(userLogin.Username, userLogin.Password);
+
+		if (response.StatusCode == 200)
+		{
+			ToastService.ShowSuccess("Giris basarili");
+
+			Session.SetUser(response.Data);
+			await ProtectedSessionStore.SetAsync("User", response.Data);
+
+
+
+			NavManager.NavigateTo("/");
+		}
+		else
+		{
+			ToastService.ShowError(string.Join(", ", response.ErrorMessages));
+		}
+	}
+
+}

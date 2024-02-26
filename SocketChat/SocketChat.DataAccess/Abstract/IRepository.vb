@@ -13,6 +13,7 @@ Public Interface IRepository(Of TId, TEntity As {Class, IEntity(Of TId), IGenera
     Function AddAsync(entity As TEntity) As Task(Of TEntity)
 
     Function RemoveAsync(id As TId) As Task(Of Boolean)
+    Function RemoveAsync(user As TEntity) As Task(Of Boolean)
 
 
     Function RemoveAsync(id As TId, isHard As Boolean) As Task(Of Boolean)
